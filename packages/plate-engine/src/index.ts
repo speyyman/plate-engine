@@ -85,4 +85,4 @@ export {
 } from './render/webgl.js'
 export { encodePNG, encodeIndexedPNG, encodeGrayPNG, indexedBitDepth, crc32, zlibStored } from './export/png.js'
 export { encodeBMP, type BmpBits } from './export/bmp.js'
-export { rotate, scaleNearest, fitTo, crop, type Grid } from './transform.js'
+export { rotate, scaleNearest, fitTo, crop, type Grid, type Cells } from './transform.js'

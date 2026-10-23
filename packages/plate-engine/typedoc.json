@@ -6,5 +6,7 @@
   "readme": "README.md",
   "tsconfig": "tsconfig.build.json",
   "excludePrivate": true,
-  "includeVersion": true
+  "includeVersion": true,
+  "disableGit": true,
+  "sourceLinkTemplate": "https://github.com/speyyman/plate-engine/blob/main/packages/plate-engine/src/{path}#L{line}"
 }

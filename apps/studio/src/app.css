@@ -98,7 +98,7 @@ a:hover {
   .gate-col {
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: calc(100vh - 62px);
   }
 }
 

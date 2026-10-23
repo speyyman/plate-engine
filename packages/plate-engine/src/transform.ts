@@ -1,4 +1,4 @@
-type Cells = Uint8Array | Float32Array
+export type Cells = Uint8Array | Float32Array
 
 /** A cell buffer with its size. */
 export type Grid<T extends Cells> = { data: T; width: number; height: number }

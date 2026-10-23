@@ -44,5 +44,8 @@
     "docs": "typedoc",
     "bench": "npm run build && node scripts/bench.mjs",
     "blue-noise": "node scripts/gen-blue-noise.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.64.1"
   }
 }
