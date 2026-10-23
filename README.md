@@ -54,7 +54,7 @@ See the [library README](packages/plate-engine/README.md) for the API, the algor
 ## Limitations
 
 - WebGL covers the ordered methods only; error diffusion runs on the CPU.
-- The e-paper grey levels for the Kobo presets are E Ink's figure for Carta panels, since Kobo does not publish one; reMarkable publishes none, so 16 is assumed. Check your own device.
+- The e-paper grey levels for the Kobo presets (16) are the figure the MobileRead wiki gives for E Ink Carta panels, since Kobo does not publish one; reMarkable publishes none either, so 16 is assumed. Check your own device.
 - Not yet published to npm.
 
 ## Licence

@@ -3,6 +3,7 @@
 //
 //   node scripts/bench.mjs            # headless: WebGL runs on SwiftShader, a CPU emulation
 //   node scripts/bench.mjs --headed   # headed: WebGL runs on this machine's GPU, if Chromium can use it
+//   node scripts/bench.mjs --no-generators   # skip the generator timings (CI)
 //
 // The renderer string is printed with the results; headless numbers are not GPU numbers.
 import { createServer } from 'node:http'
@@ -18,13 +19,14 @@ import * as pe from './dist/index.js'
 window.bench = async () => {
   const out = { renderer: null, rows: [] }
   const gl = pe.getWebGLRenderer()
+  // Median of seven runs after one warm-up, for every row.
+  const time = (fn) => { fn(); const t = []; for (let i = 0; i < 7; i++) { const a = performance.now(); fn(); t.push(performance.now() - a) } t.sort((x, y) => x - y); return t[3] }
   out.renderer = gl ? gl.info() : 'none'
   for (const size of [256, 512, 1024]) {
     // 8-bit luminance on both paths, since the GPU path uploads an 8-bit texture.
     const lum = Float32Array.from(pe.generate('moon', size, size, { params: { phase: 0.3 } }), (v) => Math.round(v * 255) / 255)
     for (const method of ['bayer8', 'blue-noise']) {
       const opts = { method, palette: pe.palettes.herbarium }
-      const time = (fn) => { fn(); const t = []; for (let i = 0; i < 7; i++) { const a = performance.now(); fn(); t.push(performance.now() - a) } t.sort((x, y) => x - y); return t[3] }
       const cpuMs = time(() => pe.renderCPU(lum, size, size, opts))
       const row = { size, method, cpuMs, glMs: null, agree: null }
       if (gl) {
@@ -40,9 +42,8 @@ window.bench = async () => {
   }
   for (const method of ['floyd-steinberg', 'atkinson']) {
     const lum = pe.generate('moon', 1024, 1024, { params: { phase: 0.3 } })
-    const a = performance.now()
-    pe.renderCPU(lum, 1024, 1024, { method, palette: pe.palettes.herbarium })
-    out.rows.push({ size: 1024, method, cpuMs: performance.now() - a, glMs: null, agree: null })
+    const cpuMs = time(() => pe.renderCPU(lum, 1024, 1024, { method, palette: pe.palettes.herbarium }))
+    out.rows.push({ size: 1024, method, cpuMs, glMs: null, agree: null })
   }
   return out
 }
@@ -85,6 +86,32 @@ for (const r of result.rows) {
   console.log(
     `| ${r.size}² | ${r.method} | ${fmt(r.cpuMs)} | ${fmt(r.glMs)} | ${r.agree === null ? '–' : (r.agree * 100).toFixed(3) + '%'} |`,
   )
+}
+
+// Generators, in Node: every one at the cell grid Plate Studio draws for a 1072 × 1448 panel at
+// 3 px cells (358 × 483), and the moon, the slowest, at the full panel size. Median of three after a warm-up.
+if (!process.argv.includes('--no-generators')) {
+  const pe = await import(new URL('../dist/index.js', import.meta.url).href)
+  const med3 = (fn) => {
+    fn()
+    const t = []
+    for (let i = 0; i < 3; i++) {
+      const a = performance.now()
+      fn()
+      t.push(performance.now() - a)
+    }
+    return t.sort((x, y) => x - y)[1]
+  }
+  console.log(`\nGenerators in Node ${process.version} (seed 7, default parameters, moon at phase 0.3)`)
+  console.log('| generator | cells | ms (median of 3) |')
+  console.log('|---|---|---|')
+  const jobs = Object.keys(pe.generators).map((name) => [name, 358, 483])
+  jobs.push(['moon', 1072, 1448])
+  for (const [name, w, h] of jobs) {
+    const params = name === 'moon' ? { phase: 0.3 } : undefined
+    const ms = med3(() => pe.generate(name, w, h, { seed: 7, params }))
+    console.log(`| ${name} | ${w} × ${h} | ${ms.toFixed(0)} |`)
+  }
 }
 
 // Fail if WebGL is missing or disagrees with the CPU anywhere, so CI can use this as the WebGL test.

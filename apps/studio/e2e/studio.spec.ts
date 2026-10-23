@@ -136,7 +136,37 @@ test('is usable at 375 px with the keyboard', async ({ page }) => {
   await rendered(page)
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375)
   const gen = page.getByRole('combobox', { name: 'Generator' })
+  const before = await gen.inputValue()
   await gen.focus()
   await page.keyboard.press('ArrowDown')
-  await expect(page).not.toHaveURL(/g=fern/)
+  const after = await gen.inputValue()
+  expect(after).not.toBe(before)
+  await expect(page).toHaveURL(new RegExp(`g=${after}\\b`))
+  await rendered(page)
+
+  // Tab on to the Download button; every stop on the way shows a focus ring, and Enter saves a file.
+  const download = page.getByRole('button', { name: 'Download' })
+  for (let i = 0; i < 120 && !(await download.evaluate((el) => el === document.activeElement)); i++) {
+    await page.keyboard.press('Tab')
+    const ring = await page.evaluate(() => {
+      const s = getComputedStyle(document.activeElement!)
+      return s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0
+    })
+    expect(ring).toBe(true)
+  }
+  await expect(download).toBeFocused()
+  const [dl] = await Promise.all([page.waitForEvent('download'), page.keyboard.press('Enter')])
+  expect(dl.suggestedFilename()).toMatch(new RegExp(`^plate-${after}-`))
+})
+
+test('its service worker leaves other apps’ caches on the same origin alone', async ({ page }) => {
+  // Before the worker exists, another app on the origin owns a cache.
+  await page.goto('./manifest.webmanifest')
+  await page.evaluate(() => caches.open('another-app-v1'))
+  await page.goto('./')
+  await rendered(page)
+  await page.evaluate(() => navigator.serviceWorker.ready)
+  await expect
+    .poll(() => page.evaluate(() => caches.keys()))
+    .toEqual(expect.arrayContaining(['another-app-v1', expect.stringMatching(/^plate-studio:http.*:v1$/)]))
 })

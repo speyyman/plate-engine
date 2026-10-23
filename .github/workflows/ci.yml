@@ -29,4 +29,4 @@ jobs:
         env:
           CI: 'true'
       - name: WebGL matches CPU (SwiftShader)
-        run: node packages/plate-engine/scripts/bench.mjs
+        run: node packages/plate-engine/scripts/bench.mjs --no-generators

@@ -1,10 +1,9 @@
 /**
  * E-paper output profiles. Sizes are portrait, in pixels, as the manufacturer
  * publishes them. Grey levels are rarely published by the reader makers; where
- * they are not, the figure is E Ink's for its Carta panels (16 levels of grey,
- * as quoted on the MobileRead wiki page "E Ink Carta",
- * https://wiki.mobileread.com/wiki/E_Ink_Carta, checked 2026-10-23), and the
- * note says so.
+ * they are not, the figure is the one the MobileRead wiki gives for E Ink Carta
+ * panels (16 levels of grey; https://wiki.mobileread.com/wiki/E_Ink_Carta, checked
+ * 2026-10-23), and the note says so.
  */
 
 export type Device = {
@@ -27,16 +26,17 @@ export const DEVICES: Device[] = [
     width: 1072,
     height: 1448,
     greys: 16,
-    note: 'Size from Kobo’s spec page (1448 × 1072, E Ink Carta 1300). Grey levels: E Ink’s figure for Carta panels.',
+    note: 'Size from Kobo’s spec page (1448 × 1072, E Ink Carta 1300). Grey levels: 16, the figure the MobileRead wiki gives for Carta panels.',
   },
   {
     id: 'kobo-libra-2',
     name: 'Kobo Libra 2 (7", 300 ppi)',
     // https://ereader.kobo.com/en-us/products/certified-refurbished-kobo-libra-2, Display: "7” HD E Ink Carta 1200 touchscreen 300 PPI, 1264 x 1680 resolution". Checked 2026-10-23.
+    // Kobo's standard Libra 2 page (https://ereader.kobo.com/en-us/products/kobo-libra-2) names the panel but gives no pixel size; the refurbished listing above is Kobo's own page that does.
     width: 1264,
     height: 1680,
     greys: 16,
-    note: 'Size from Kobo’s spec page (1264 × 1680, E Ink Carta 1200). Grey levels: E Ink’s figure for Carta panels.',
+    note: 'Size from Kobo’s spec page (1264 × 1680, E Ink Carta 1200). Grey levels: 16, the figure the MobileRead wiki gives for Carta panels.',
   },
   {
     id: 'remarkable-2',

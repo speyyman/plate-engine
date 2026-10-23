@@ -63,7 +63,7 @@ A generator fills a `Float32Array` of luminance at cell resolution. Ordered meth
 
 - The WebGL path covers the ordered methods only; error diffusion is sequential and runs on the CPU.
 - WebGL grain uses a hash, not the PRNG, so with grain switched on the two paths make different (equally random) noise. Without grain they match.
-- Some generators are slow at large sizes: on one laptop CPU (Node 24) the moon took 0.6 s at 358 × 483 cells and 5 s at 1072 × 1448. Draw at a coarser cell size and enlarge, and run generators in a worker, as Plate Studio does.
+- Some generators are slow at large sizes: on one laptop CPU (Node 24) the moon took 0.6 s at 358 × 483 cells and 4.9 s at 1072 × 1448 (`npm run bench`; see [BENCHMARKS.md](BENCHMARKS.md#generators)). Draw at a coarser cell size and enlarge, and run generators in a worker, as Plate Studio does.
 - Colour images are reduced to luminance. Dithering to a colour palette maps tones, not hues.
 
 ## Licence
