@@ -1,0 +1,10 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "out": "../../docs-site/docs",
+  "name": "plate-engine",
+  "readme": "README.md",
+  "tsconfig": "tsconfig.build.json",
+  "excludePrivate": true,
+  "includeVersion": true
+}

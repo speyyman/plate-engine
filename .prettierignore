@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-*
+docs-site
+coverage
+test-results
+playwright-report
+package-lock.json
+packages/plate-engine/src/dither/blue-noise-64.ts
+packages/plate-engine/test/fixtures/site-art

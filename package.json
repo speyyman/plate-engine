@@ -1,0 +1,33 @@
+{
+  "name": "plate-engine-monorepo",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/plate-engine",
+    "apps/studio"
+  ],
+  "scripts": {
+    "build": "npm run build -w plate-engine && npm run build -w plate-studio",
+    "test": "npm test -w plate-engine",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "docs": "npm run docs -w plate-engine",
+    "e2e": "npm run e2e -w plate-studio",
+    "bench": "npm run bench -w plate-engine"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.2",
+    "@types/pngjs": "6.0.5",
+    "eslint": "10.13.0",
+    "pngjs": "7.0.0",
+    "prettier": "3.9.10",
+    "typedoc": "0.28.20",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "5.0.5"
+  }
+}
