@@ -8,14 +8,15 @@ It is the engine behind every image on [speyyman.github.io](https://speyyman.git
 
 ## Install
 
-Not on npm yet. From a clone:
-
 ```sh
-npm ci
-npm run build -w plate-engine
+npm install plate-engine
 ```
 
-Then import from `packages/plate-engine/dist/index.js`, or add the package folder as a local dependency.
+ES modules only, with TypeScript types included. Runs in browsers, web workers and Node 20 or later.
+
+- API reference: <https://speyyman.github.io/plate-engine/docs/>
+- Plate Studio, the browser tool built on it: <https://speyyman.github.io/plate-engine/>
+- Source, tests and benchmarks: <https://github.com/speyyman/plate-engine>
 
 ## Use
 
@@ -39,7 +40,7 @@ In a browser, `renderAuto` uses one shared WebGL1 context for the ordered method
 
 - **Generators** (11): sunburst, sphere, orbits, eye, ridges, medallion, fern, phyllotaxis, branches, chladni, moon. Each implements one interface, `draw(width, height, rng, params) => Float32Array`, and documents its parameters (label, description, default, range, step). Defaults reproduce the original plates. Write your own with `defineGenerator`.
 - **Dither** (7 methods): threshold; ordered Bayer 2×2, 4×4 and 8×8; ordered blue noise with a 64×64 void-and-cluster mask; Floyd–Steinberg; Atkinson. Any number of tones from 2 to 16, any palette, optional seeded grain.
-- **Renderers**: CPU (anywhere) and WebGL1 (browsers, ordered methods). On the same 8-bit input they produce identical pixels; see [BENCHMARKS.md](BENCHMARKS.md).
+- **Renderers**: CPU (anywhere) and WebGL1 (browsers, ordered methods). On the same 8-bit input they produce identical pixels; see [BENCHMARKS.md](https://github.com/speyyman/plate-engine/blob/main/packages/plate-engine/BENCHMARKS.md).
 - **Exporters**: PNG (RGBA, palette-indexed at 1, 2, 4 or 8 bits, 8-bit greyscale) and BMP (1-, 4-, 8- and 24-bit). PNG compression uses the platform's `CompressionStream`; without it the encoder writes valid uncompressed files.
 - **Helpers**: Mulberry32 PRNG, the moon's phase for any date, palette parsing, brightness/contrast/gamma, rotate, nearest-neighbour scale, fit and crop.
 
@@ -63,9 +64,9 @@ A generator fills a `Float32Array` of luminance at cell resolution. Ordered meth
 
 - The WebGL path covers the ordered methods only; error diffusion is sequential and runs on the CPU.
 - WebGL grain uses a hash, not the PRNG, so with grain switched on the two paths make different (equally random) noise. Without grain they match.
-- Some generators are slow at large sizes: on one laptop CPU (Node 24) the moon took 0.6 s at 358 × 483 cells and 4.9 s at 1072 × 1448 (`npm run bench`; see [BENCHMARKS.md](BENCHMARKS.md#generators)). Draw at a coarser cell size and enlarge, and run generators in a worker, as Plate Studio does.
+- Some generators are slow at large sizes: on one laptop CPU (Node 24) the moon took 0.6 s at 358 × 483 cells and 4.9 s at 1072 × 1448 (`npm run bench`; see [BENCHMARKS.md](https://github.com/speyyman/plate-engine/blob/main/packages/plate-engine/BENCHMARKS.md#generators)). Draw at a coarser cell size and enlarge, and run generators in a worker, as Plate Studio does.
 - Colour images are reduced to luminance. Dithering to a colour palette maps tones, not hues.
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](https://github.com/speyyman/plate-engine/blob/main/packages/plate-engine/LICENSE).

@@ -11,6 +11,8 @@ This repository holds two things:
 | [`packages/plate-engine`](packages/plate-engine) | The library: 11 generators, 7 dither methods, 2 to 16 tones, CPU and WebGL renderers, PNG and BMP export. TypeScript, no runtime dependencies. [API docs](https://speyyman.github.io/plate-engine/docs/).                                                                         |
 | [`apps/studio`](apps/studio)                     | Plate Studio: pick a generator or drop in your own image, choose a dither and a palette, and download a PNG or BMP, including at the native size of an e-reader panel. Runs in your browser; your image is never uploaded. [Live tool](https://speyyman.github.io/plate-engine/). |
 
+To use the library in your own project: `npm install plate-engine` ([npm](https://www.npmjs.com/package/plate-engine)).
+
 The engine started as the image code of [speyyman.github.io](https://speyyman.github.io). Its golden tests prove it still draws the site's plates bit for bit.
 
 ## Quick start
@@ -55,7 +57,6 @@ See the [library README](packages/plate-engine/README.md) for the API, the algor
 
 - WebGL covers the ordered methods only; error diffusion runs on the CPU.
 - The e-paper grey levels for the Kobo presets (16) are the figure the MobileRead wiki gives for E Ink Carta panels, since Kobo does not publish one; reMarkable publishes none either, so 16 is assumed. Check your own device.
-- Not yet published to npm.
 
 ## Licence
 

@@ -4,6 +4,10 @@
   "description": "Procedural engravings and the dither that prints them: generators, ordered, blue-noise and error-diffusion dither, CPU and WebGL renderers, PNG and BMP export for e-paper.",
   "license": "MIT",
   "author": "Saeed Peyman",
+  "homepage": "https://speyyman.github.io/plate-engine/docs/",
+  "bugs": {
+    "url": "https://github.com/speyyman/plate-engine/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
@@ -17,6 +21,8 @@
   "files": [
     "dist",
     "README.md",
+    "BENCHMARKS.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "keywords": [
@@ -43,9 +49,17 @@
     "test": "vitest run",
     "docs": "typedoc",
     "bench": "npm run build && node scripts/bench.mjs",
-    "blue-noise": "node scripts/gen-blue-noise.mjs"
+    "blue-noise": "node scripts/gen-blue-noise.mjs",
+    "prepublishOnly": "npm run build && npm test",
+    "smoke:pack": "node scripts/pack-smoke.mjs"
   },
   "devDependencies": {
     "playwright": "1.64.1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

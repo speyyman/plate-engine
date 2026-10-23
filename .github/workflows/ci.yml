@@ -22,6 +22,8 @@ jobs:
       - run: npm run typecheck -w plate-engine
       - run: npm test
       - run: npm run build
+      - name: Published package installs and works
+        run: npm run smoke:pack -w plate-engine
       - run: npm run docs
       - run: npx playwright install --with-deps chromium
       - name: Studio end-to-end tests
