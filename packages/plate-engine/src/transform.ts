@@ -77,3 +77,14 @@ export function fitTo<T extends Cells>(
   }
   return { data: out, width, height }
 }
+
+/** Cut a `width × height` window out of a cell buffer, centred unless `x`/`y` are given. */
+export function crop<T extends Cells>(src: Grid<T>, width: number, height: number, x?: number, y?: number): Grid<T> {
+  const { data, width: w, height: h } = src
+  if (width > w || height > h) throw new RangeError(`cannot crop ${w}×${h} to ${width}×${height}`)
+  const x0 = x ?? Math.floor((w - width) / 2)
+  const y0 = y ?? Math.floor((h - height) / 2)
+  const out = like(data, width * height)
+  for (let r = 0; r < height; r++) out.set(data.subarray((y0 + r) * w + x0, (y0 + r) * w + x0 + width), r * width)
+  return { data: out, width, height }
+}

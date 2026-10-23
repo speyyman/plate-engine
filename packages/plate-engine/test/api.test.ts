@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   adjust,
+  crop,
   defineGenerator,
   fitTo,
   generate,
@@ -133,5 +134,12 @@ describe('luminance and transforms', () => {
     expect(Array.from(c.data)).toEqual([9, 1, 2, 9, 9, 3, 4, 9])
     const v = fitTo(g, 2, 4, 'cover')
     expect(v.width * v.height).toBe(8)
+  })
+
+  it('crops a centred window', () => {
+    const g = { data: Uint8Array.from({ length: 16 }, (_, i) => i), width: 4, height: 4 }
+    expect(Array.from(crop(g, 2, 2).data)).toEqual([5, 6, 9, 10])
+    expect(Array.from(crop(g, 2, 1, 0, 3).data)).toEqual([12, 13])
+    expect(() => crop(g, 5, 1)).toThrow(RangeError)
   })
 })

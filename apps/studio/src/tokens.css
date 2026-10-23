@@ -1,0 +1,43 @@
+/* Copyboard tokens. See DESIGN.md. Every screen is built from these. */
+:root {
+  --cb-room: #17181a;
+  --cb-panel: #212327;
+  --cb-raised: #2b2e33;
+  --cb-rule: #3d4148;
+  --cb-edge: #7a7f88;
+  --cb-text: #ece9e2;
+  --cb-dim: #a9a59b;
+  --cb-amber: #f2a93b;
+  --cb-amber-lit: #f6bb5f;
+  --cb-on-amber: #17181a;
+  --cb-film: #0b0c0d;
+  --cb-alert: #ef8f86;
+
+  --cb-font-label: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif;
+  --cb-font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --cb-t-caption: 12px;
+  --cb-t-label: 13px;
+  --cb-t-body: 15px;
+  --cb-t-section: 18px;
+  --cb-t-title: 24px;
+
+  --cb-s1: 4px;
+  --cb-s2: 8px;
+  --cb-s3: 12px;
+  --cb-s4: 16px;
+  --cb-s5: 24px;
+  --cb-s6: 32px;
+  --cb-s7: 48px;
+
+  --cb-radius: 2px;
+  --cb-bevel: inset 0 1px 0 #ffffff0d;
+  --cb-ease: 120ms ease-out;
+  --cb-focus: 2px solid var(--cb-amber);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cb-ease: 0ms linear;
+  }
+}

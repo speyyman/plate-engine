@@ -1,0 +1,11 @@
+{
+  "name": "Plate Studio",
+  "short_name": "Plate Studio",
+  "description": "Dither procedural engravings and your own images for screens and e-paper.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#17181a",
+  "theme_color": "#17181a",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
