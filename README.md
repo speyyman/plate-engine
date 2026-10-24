@@ -61,3 +61,5 @@ See the [library README](packages/plate-engine/README.md) for the API, the algor
 ## Licence
 
 MIT, see [LICENSE](LICENSE). Fonts in Plate Studio (Barlow Semi Condensed, IBM Plex Mono) are under the SIL Open Font License and are bundled from `@fontsource`.
+
+Development was assisted by Claude (Anthropic).
